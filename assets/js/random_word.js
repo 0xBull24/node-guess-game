@@ -4,7 +4,7 @@ const randomWord = {
     // Properties
     guessNumber: 0,
     guessArray: [],
-    returnedword: 'test',
+    returnedword: '',
     randomWordUrl: 'https://nlp.fi.muni.cz/projekty/random_word/run.cgi?language_selection=en&word_selection=verbs&model_selection=use&length_selection=&probability_selection=true',
 
     // Methods
@@ -14,6 +14,7 @@ const randomWord = {
             .then((result) => {
                 this.returnedword = result.data
                 console.log(result.data);
+                this.setGame();
                 // console.log(result.data.length);
             }).catch((err) => {
                 console.log(err)
@@ -25,12 +26,12 @@ const randomWord = {
     // Fill guess array with '_' to show progress
     setGame: function () {
         if (this.returnedword) {
-            this.guessNumber = (this.returnedword.length - 1);
+            this.guessNumber = (this.returnedword.length - 1) + 4;
         }
 
-        console.log(`The length of the random word is: ${this.guessNumber}`);
+        console.log(`The length of the random word is: ${this.returnedword.length - 1}`);
 
-        for (let count = 0; count <= this.guessNumber; count++) {
+        for (let count = 1; count <= (this.returnedword.length - 1); count++) {
             this.guessArray.push('_');
         }
     },
@@ -43,7 +44,7 @@ const randomWord = {
             }
         });
         console.log(this.guessArray);
-    }
+    },
 };
 
 module.exports = randomWord;

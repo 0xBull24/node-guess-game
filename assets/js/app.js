@@ -15,8 +15,8 @@ inquirer.prompt([
 ]).then((result) => {
     switch (result.menuChoice) {
         case 'Play a game':
-            console.log('Starting the game ....');
-            randomWord.setGame();
+            console.log('\nStarting the game ....');
+            randomWord.getRandomWord();
             getGuess();
             break;
         case 'Exit the game':
