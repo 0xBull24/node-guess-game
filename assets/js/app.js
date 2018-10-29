@@ -1,8 +1,7 @@
 // 
 const randomWord = require('./random_word');
 const inquirer = require('inquirer');
-let guessNumber;
-let guessArray = []
+
 
 
 
@@ -17,15 +16,8 @@ inquirer.prompt([
     switch (result.menuChoice) {
         case 'Play a game':
             console.log('Starting the game ....');
-            if (randomWord.returnedword) {
-                guessNumber = (randomWord.returnedword.length - 1) + 3
-            }
-            console.log(`The length of the random word is: ${guessNumber}`);
-
-            for (let count = 0; count <= guessNumber; count++) {
-                guessArray.push('_');
-            }
-            console.log(guessArray);
+            randomWord.setGame();
+            getGuess();
             break;
         case 'Exit the game':
             process.exit();
@@ -36,3 +28,17 @@ inquirer.prompt([
 }).catch((err) => {
     console.log(err);
 });
+
+// Grab guess from the user
+function getGuess() {[
+    inquirer.prompt([
+        {
+            type: 'input',
+            message: 'Choose a letter',
+            name: 'menuLetter',
+        }
+    ]).then(result => {
+        firstLetter = result.menuLetter.charAt(0);
+        randomWord.wordCheck(randomWord.returnedword.split(''), firstLetter);
+    })
+]}
