@@ -2,6 +2,7 @@ const axios = require('axios');
 
 const randomWord = {
     // Properties
+    guessChances: 0,
     guessNumber: 0,
     guessArray: [],
     returnedword: '',
@@ -36,8 +37,10 @@ const randomWord = {
         }
     },
 
+    // Increase guess count
     // Check the guessed letter and replace and values if it matches them in the array
     wordCheck: function(array, guess) {
+        this.guessChances++;
         array.forEach((element, index) => {
             if (guess === element) {
                 this.guessArray[index] = guess;
