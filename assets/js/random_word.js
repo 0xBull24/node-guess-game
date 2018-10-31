@@ -1,4 +1,5 @@
 const axios = require('axios');
+const app = require('./app');
 
 const randomWord = {
     // Properties
@@ -14,8 +15,7 @@ const randomWord = {
         return new Promise((resolve, reject) => {
             axios.get(this.randomWordUrl)
                 .then((result) => {
-                    this.returnedword = result.data
-                    console.log(result.data);
+                    this.returnedword = result.data.replace(/\r?\n/g, '');
                     this.setGame();
                     resolve();
                 }).catch((err) => {
@@ -31,27 +31,22 @@ const randomWord = {
     // Fill guess array with '_' to show progress
     setGame: function () {
         if (this.returnedword) {
-            this.guessNumber = (this.returnedword.length - 1) + 4;
+            this.guessNumber = (this.returnedword.length) + 3;
         }
 
-        console.log(`The length of the random word is: ${this.returnedword.length - 1}`);
+        console.log(`The length of the random word is: ${this.returnedword.length}`);
 
-        for (let count = 1; count <= (this.returnedword.length - 1); count++) {
+        for (let count = 1; count <= (this.returnedword.length); count++) {
             this.guessArray.push('_');
         }
     },
 
-    // Increase guess count
-    // Check the guessed letter and replace and values if it matches them in the array
-    wordCheck: function (array, guess) {
-        this.guessChances++;
-        array.forEach((element, index) => {
-            if (guess === element) {
-                this.guessArray[index] = guess;
-            }
-        });
-        console.log(this.guessArray);
-    },
+    reset: function () {
+        this.guessNumber = 0;
+        this.guessChances = 0;
+        this.returnedword = '';
+        this.guessArray = [];
+    }
 };
 
 module.exports = randomWord;
