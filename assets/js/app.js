@@ -14,6 +14,7 @@ function startGame() {
         switch (result.menuChoice) {
             case 'Play a game':
                 console.log('\nStarting the game ....');
+                randomWord.reset();
                 randomWord.getRandomWord().then(() => {
                     getGuess();
                 })
@@ -30,21 +31,20 @@ function startGame() {
 };
 // Grab guess from the user
 function getGuess() {
-    console.log(`\nYou have guessed ${randomWord.guessChances} times`);
-    console.log(`You can guess ${randomWord.guessNumber} times`);
+    console.log(`\nYou have guessed ${randomWord.guessChances} times total`);
+    console.log(`You can guess ${randomWord.guessNumber} times total`);
     if (randomWord.guessChances < randomWord.guessNumber) {
         inquirer.prompt([{
             type: 'input',
             message: 'Choose a letter',
             name: 'menuLetter',
         }]).then(result => {
-            firstLetter = result.menuLetter.charAt(0);
+            firstLetter = result.menuLetter.charAt(0).toLowerCase();
             wordCheck(randomWord.returnedword.split(''), firstLetter);
             getGuess();
         })
-    } else {  // Lose condition
+    } else if (randomWord.guessChances === randomWord.guessNumber) { // Lose condition
         console.log(`Sorry you lose. Heading back to the menu`);
-        randomWord.reset();
         startGame();
     }
 }
@@ -62,8 +62,8 @@ function wordCheck(array, guess) {
     // Win condition 
     if (randomWord.guessArray.join('') === randomWord.returnedword) {
         console.log(`\nGood Job. Look like you won. Going back to menu`);
-        randomWord.reset();
         startGame();
     }
     console.log(randomWord.guessArray);
+    return;
 }

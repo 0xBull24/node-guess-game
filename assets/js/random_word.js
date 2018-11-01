@@ -15,7 +15,7 @@ const randomWord = {
         return new Promise((resolve, reject) => {
             axios.get(this.randomWordUrl)
                 .then((result) => {
-                    this.returnedword = result.data.replace(/\r?\n/g, '');
+                    this.returnedword = result.data.replace(/\r?\n/g, '').toLowerCase();
                     this.setGame();
                     resolve();
                 }).catch((err) => {
