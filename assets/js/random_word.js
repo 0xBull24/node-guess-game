@@ -46,6 +46,7 @@ const randomWord = {
         this.guessChances = 0;
         this.returnedword = '';
         this.guessArray = [];
+        return;
     }
 };
 

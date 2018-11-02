@@ -5,6 +5,7 @@ const inquirer = require('inquirer');
 startGame();
 
 function startGame() {
+    randomWord.reset();
     inquirer.prompt([{
         type: 'list',
         message: 'What would you like to do?',
@@ -14,15 +15,12 @@ function startGame() {
         switch (result.menuChoice) {
             case 'Play a game':
                 console.log('\nStarting the game ....');
-                randomWord.reset();
                 randomWord.getRandomWord().then(() => {
                     getGuess();
                 })
                 break;
             case 'Exit the game':
                 process.exit();
-                break
-            default:
                 break;
         }
     }).catch((err) => {
@@ -43,9 +41,6 @@ function getGuess() {
             wordCheck(randomWord.returnedword.split(''), firstLetter);
             getGuess();
         })
-    } else if (randomWord.guessChances === randomWord.guessNumber) { // Lose condition
-        console.log(`Sorry you lose. Heading back to the menu`);
-        startGame();
     }
 }
 
@@ -62,8 +57,12 @@ function wordCheck(array, guess) {
     // Win condition 
     if (randomWord.guessArray.join('') === randomWord.returnedword) {
         console.log(`\nGood Job. Look like you won. Going back to menu`);
+        console.log(`The word was ${randomWord.returnedword}`);
+        startGame();
+    } else if (randomWord.guessChances === randomWord.guessNumber) { // Lose condition
+        console.log(`\nSorry you lose. Heading back to the menu`);
+        console.log(`The word was ${randomWord.returnedword}`);
         startGame();
     }
-    console.log(randomWord.guessArray);
-    return;
+    console.log(`\n${randomWord.guessArray}`);
 }
