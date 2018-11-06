@@ -34,6 +34,12 @@ or you can navigate to the `\assets\js\` folder and run
 node app.js
 ```
 
+## Demo
+
+![Denmo](./assets/images/hangmandemo.gif)
+
+I'm terrible with guessing these words
+
 ## Built With
 
 * [Axios](https://www.npmjs.com/package/axios) - HTTP Request
